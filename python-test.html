@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4e69;
+        }
+
+        .exercise {
+            margin-bottom: 20px;
+        }
+
+        .exercise h2 {
+            color: #333;
+        }
+
+        .code-area {
+            width: 100%;
+            height: 150px;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1em;
+        }
+
+        .run-btn {
+            background-color: #4a4e69;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .run-btn:hover {
+            background-color: #22223b;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f9;
+            border-left: 4px solid #4a4e69;
+            font-family: monospace;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python Practice</h1>
+
+        <div class="exercise">
+            <h2>Exercise 1: Sum of Two Numbers</h2>
+            <p>Write a Python function that takes two numbers as input and returns their sum.</p>
+            <textarea class="code-area" id="code1" placeholder="def sum_two_numbers(a, b):&#10;    # Your code here"></textarea>
+            <button class="run-btn" onclick="runCode('code1')">Run Code</button>
+            <div class="output" id="output1">Output will appear here.</div>
+        </div>
+
+        <div class="exercise">
+            <h2>Exercise 2: Check Even or Odd</h2>
+            <p>Write a function that checks if a number is even or odd.</p>
+            <textarea class="code-area" id="code2" placeholder="def is_even(num):&#10;    # Your code here"></textarea>
+            <button class="run-btn" onclick="runCode('code2')">Run Code</button>
+            <div class="output" id="output2">Output will appear here.</div>
+        </div>
+
+        <div class="exercise">
+            <h2>Exercise 3: Reverse a String</h2>
+            <p>Write a function that reverses a given string.</p>
+            <textarea class="code-area" id="code3" placeholder="def reverse_string(s):&#10;    # Your code here"></textarea>
+            <button class="run-btn" onclick="runCode('code3')">Run Code</button>
+            <div class="output" id="output3">Output will appear here.</div>
+        </div>
+    </div>
+
+    <script>
+        // Simple JavaScript function to display the code as "output"
+        function runCode(codeId) {
+            const code = document.getElementById(codeId).value;
+            const outputId = 'output' + codeId.slice(-1);
+            document.getElementById(outputId).innerText = "Running code:\n" + code + "\n\n(Note: This is a placeholder output)";
+        }
+    </script>
+</body>
+</html>
