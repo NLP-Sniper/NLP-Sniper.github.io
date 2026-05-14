@@ -3,340 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人博客 | 灵感与技术</title>
+    <title>我的动态博客管理系统</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         :root {
-            --primary-color: #6366f1;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --transition: all 0.3s ease;
+            --primary: #6366f1;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
         }
 
-        [data-theme="dark"] {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            transition: var(--transition);
-        }
-
-        /* --- 导航栏 --- */
-        nav {
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        [data-theme="dark"] nav {
-            background: rgba(15, 23, 42, 0.8);
-        }
-
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .theme-toggle {
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        /* --- Hero 区域 --- */
-        .hero {
-            padding: 4rem 2rem;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #6366f1, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .search-box {
-            margin-top: 2rem;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            border: 2px solid rgba(0,0,0,0.05);
-            background: var(--card-bg);
-            color: var(--text-main);
-            font-size: 1rem;
-            outline: none;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        }
-
-        /* --- 内容布局 --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
+        /* 编辑器样式 */
+        .editor-section {
+            background: var(--card);
             padding: 2rem;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
-        }
-
-        /* 文章列表 */
-        .post-card {
-            background: var(--card-bg);
             border-radius: 1rem;
-            overflow: hidden;
-            margin-bottom: 2rem;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            transition: var(--transition);
-            border: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
         }
 
-        .post-card:hover {
-            transform: translateY(-5px);
-        }
+        .editor-section h2 { margin-bottom: 1.5rem; color: var(--primary); }
 
-        .post-img {
+        input, textarea {
             width: 100%;
-            height: 200px;
-            background: #e2e8f0;
-            background-image: linear-gradient(45deg, #6366f122, #a855f722);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .post-content {
-            padding: 1.5rem;
-        }
-
-        .post-tag {
-            background: #6366f115;
-            color: var(--primary-color);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .post-title {
-            margin: 1rem 0;
-            font-size: 1.5rem;
-        }
-
-        .post-meta {
-            color: var(--text-muted);
-            font-size: 0.85rem;
+            padding: 0.8rem;
             margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
         }
 
-        /* 侧边栏 */
-        .sidebar-widget {
-            background: var(--card-bg);
+        textarea { height: 150px; resize: vertical; }
+
+        .btn-group { display: flex; gap: 10px; }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-save { background: var(--primary); color: white; }
+        .btn-save:hover { background: #4f46e5; }
+        .btn-cancel { background: #e5e7eb; color: #4b5563; }
+
+        /* 文章列表样式 */
+        .post-card {
+            background: var(--card);
             padding: 1.5rem;
             border-radius: 1rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            position: relative;
+            animation: fadeIn 0.5s ease;
         }
 
-        .profile-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-            background: #6366f1;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .social-links {
+        .post-card h3 { margin-bottom: 0.5rem; font-size: 1.5rem; }
+        .post-date { font-size: 0.85rem; color: #9ca3af; margin-bottom: 1rem; }
+        .post-content { color: #4b5563; white-space: pre-wrap; }
+
+        .post-actions {
+            margin-top: 1.5rem;
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
         }
 
-        .social-links a {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
+        .action-btn { background: none; color: #6b7280; font-size: 0.9rem; padding: 0; }
+        .action-btn:hover { color: var(--primary); }
+        .delete-btn:hover { color: #ef4444; }
 
-        .social-links a:hover {
-            color: var(--primary-color);
-        }
-
-        footer {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2rem; }
-            .nav-links { display: none; } /* 移动端可进一步添加汉堡菜单 */
-        }
+        .empty-state { text-align: center; color: #9ca3af; padding: 3rem; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">DevLog.</a>
-            <div class="nav-links">
-                <a href="#home">首页</a>
-                <a href="#articles">文章</a>
-                <a href="#about">关于</a>
-                <div class="theme-toggle" onclick="toggleTheme()">
-                    <i class="fas fa-moon"></i>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <header class="hero">
-        <h1>探索技术与生活的边界</h1>
-        <p style="color: var(--text-muted);">分享关于前端开发、AI应用以及个人成长的思考。</p>
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="搜索感兴趣的话题..." onkeyup="filterPosts()">
-        </div>
+<div class="container">
+    <header style="margin-bottom: 2rem; text-align: center;">
+        <h1>我的动态博客助手</h1>
+        <p>随时记录、随时修改、永不丢失</p>
     </header>
 
-    <div class="container">
-        <main id="postList">
-            <article class="post-card">
-                <div class="post-img"><i class="fas fa-code fa-3x" style="color: var(--primary-color)"></i></div>
-                <div class="post-content">
-                    <span class="post-tag">前端技术</span>
-                    <h2 class="post-title">如何使用 CSS Grid 构建响应式布局</h2>
-                    <p class="post-meta"><i class="far fa-calendar"></i> 2024年5月10日 · <i class="far fa-clock"></i> 5分钟阅读</p>
-                    <p style="color: var(--text-muted)">Grid 布局是 CSS 中最强大的功能之一，本文将带你从基础到进阶掌握它...</p>
-                </div>
-            </article>
+    <section class="editor-section">
+        <h2 id="editorTitle">撰写新文章</h2>
+        <input type="hidden" id="editIndex">
+        <input type="text" id="postTitle" placeholder="文章标题...">
+        <textarea id="postContent" placeholder="开始你的创作..."></textarea>
+        <div class="btn-group">
+            <button class="btn-save" onclick="savePost()">发布文章</button>
+            <button class="btn-cancel" onclick="resetEditor()">清空重置</button>
+        </div>
+    </section>
 
-            <article class="post-card">
-                <div class="post-img"><i class="fas fa-robot fa-3x" style="color: var(--primary-color)"></i></div>
-                <div class="post-content">
-                    <span class="post-tag">人工智能</span>
-                    <h2 class="post-title">2024 年 AI 辅助编程的最佳实践</h2>
-                    <p class="post-meta"><i class="far fa-calendar"></i> 2024年5月12日 · <i class="far fa-clock"></i> 8分钟阅读</p>
-                    <p style="color: var(--text-muted)">如何利用大型语言模型提升开发效率，而不丢失代码的可维护性？</p>
-                </div>
-            </article>
-        </main>
+    <div id="postsContainer">
+        </div>
+</div>
 
-        <aside>
-            <div class="sidebar-widget">
-                <div class="profile-img"></div>
-                <h3>关于我</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
-                    一名热爱创造的开发者。在这里，我记录学习点滴，分享有趣的发现。
-                </p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-weixin"></i></a>
-                </div>
-            </div>
+<script>
+    // 初始化数据
+    let posts = JSON.parse(localStorage.getItem('myBlogPosts')) || [];
 
-            <div class="sidebar-widget">
-                <h3>热门标签</h3>
-                <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                    <span class="post-tag">React</span>
-                    <span class="post-tag">Python</span>
-                    <span class="post-tag">UI设计</span>
-                    <span class="post-tag">旅行</span>
-                </div>
-            </div>
-        </aside>
-    </div>
+    // 保存或更新文章
+    function savePost() {
+        const title = document.getElementById('postTitle').value;
+        const content = document.getElementById('postContent').value;
+        const editIndex = document.getElementById('editIndex').value;
 
-    <footer>
-        <p>&copy; 2024 我的个人博客. Built with ❤️ and Code.</p>
-    </footer>
-
-    <script>
-        // 暗黑模式切换
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.querySelector('.theme-toggle i');
-            
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                icon.className = 'fas fa-moon';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                icon.className = 'fas fa-sun';
-            }
+        if (!title || !content) {
+            alert("标题和内容都不能为空哦！");
+            return;
         }
 
-        // 文章搜索过滤
-        function filterPosts() {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toLowerCase();
-            const posts = document.querySelectorAll('.post-card');
+        const postData = {
+            title: title,
+            content: content,
+            date: new Date().toLocaleString(),
+        };
 
-            posts.forEach(post => {
-                const title = post.querySelector('.post-title').innerText.toLowerCase();
-                const content = post.innerText.toLowerCase();
-                if (title.includes(filter) || content.includes(filter)) {
-                    post.style.display = "block";
-                } else {
-                    post.style.display = "none";
-                }
-            });
+        if (editIndex === "") {
+            // 新增
+            posts.unshift(postData);
+        } else {
+            // 修改
+            posts[editIndex] = postData;
         }
-    </script>
+
+        localStorage.setItem('myBlogPosts', JSON.stringify(posts));
+        resetEditor();
+        renderPosts();
+    }
+
+    // 渲染文章列表
+    function renderPosts() {
+        const container = document.getElementById('postsContainer');
+        container.innerHTML = '';
+
+        if (posts.length === 0) {
+            container.innerHTML = '<div class="empty-state">还没有文章，快去写一篇吧！</div>';
+            return;
+        }
+
+        posts.forEach((post, index) => {
+            const card = document.createElement('div');
+            card.className = 'post-card';
+            card.innerHTML = `
+                <h3>${post.title}</h3>
+                <div class="post-date"><i class="far fa-clock"></i> ${post.date}</div>
+                <div class="post-content">${post.content}</div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="editPost(${index})"><i class="fas fa-edit"></i> 编辑</button>
+                    <button class="action-btn delete-btn" onclick="deletePost(${index})"><i class="fas fa-trash"></i> 删除</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // 进入编辑模式
+    function editPost(index) {
+        const post = posts[index];
+        document.getElementById('postTitle').value = post.title;
+        document.getElementById('postContent').value = post.content;
+        document.getElementById('editIndex').value = index;
+        document.getElementById('editorTitle').innerText = "修改文章内容";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 删除文章
+    function deletePost(index) {
+        if (confirm("确定要删除这篇文章吗？")) {
+            posts.splice(index, 1);
+            localStorage.setItem('myBlogPosts', JSON.stringify(posts));
+            renderPosts();
+        }
+    }
+
+    // 重置编辑器
+    function resetEditor() {
+        document.getElementById('postTitle').value = "";
+        document.getElementById('postContent').value = "";
+        document.getElementById('editIndex').value = "";
+        document.getElementById('editorTitle').innerText = "撰写新文章";
+    }
+
+    // 页面加载时渲染
+    renderPosts();
+</script>
+
 </body>
 </html>
