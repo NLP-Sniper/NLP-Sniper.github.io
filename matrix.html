@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>黑客帝国数字瀑布</title>
+    <title>黑客帝国 01数字瀑布</title>
     <style>
-        /* 全局样式：清除默认边距，隐藏滚动条，全屏黑色背景 */
         * {
             margin: 0;
             padding: 0;
@@ -15,68 +14,50 @@
             overflow: hidden;
             background: #000;
         }
-        /* Canvas铺满全屏，作为数字瀑布的绘制容器 */
         #matrix {
             display: block;
         }
     </style>
 </head>
 <body>
-    <!-- 核心绘制画布 -->
     <canvas id="matrix"></canvas>
 
     <script>
-        // 获取Canvas元素和绘图上下文
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
 
-        // 设置Canvas尺寸为窗口大小（全屏）
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // 黑客帝国经典字符集：日文片假名 + 数字 + 字母（核心视觉元素）
-        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-        // 字体大小（控制数字密度）
+        // 仅保留 0 和 1
+        const chars = '01';
         const fontSize = 16;
-        // 计算列数：窗口宽度 / 字体大小
         const columns = Math.floor(canvas.width / fontSize);
-        // 存储每一列数字的下落位置（初始值随机，让瀑布分布更自然）
         const drops = [];
         for (let i = 0; i < columns; i++) {
             drops[i] = Math.floor(Math.random() * canvas.height);
         }
 
-        // 绘制数字瀑布的核心函数
         function drawMatrix() {
-            // 关键：半透明黑色遮罩，实现字符拖影消失效果
             ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // 设置字符样式：绿色 + 等宽字体
             ctx.fillStyle = '#00FF00';
             ctx.font = `${fontSize}px monospace`;
 
-            // 遍历每一列，绘制字符
             for (let i = 0; i < drops.length; i++) {
-                // 随机选取一个字符
                 const text = chars[Math.floor(Math.random() * chars.length)];
-                // 绘制字符（x坐标：列数*字体大小，y坐标：当前下落位置）
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-                // 数字落到屏幕底部后，随机重置到顶部，循环下落
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
-
-                // 每帧下落1个单位
                 drops[i]++;
             }
         }
 
-        // 循环绘制（60帧/秒，流畅动画）
         setInterval(drawMatrix, 35);
 
-        // 窗口大小变化时，重新适配Canvas尺寸
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
